@@ -2,7 +2,7 @@ version: '2'
 
 services:
   namenode:
-    image: hadoop-base
+    build: ./hadoop-base
     container_name: namenode
     hostname: namenode
     networks: 
@@ -17,14 +17,14 @@ services:
       # - "8042:8042"
     command: "/etc/bootstrap.sh -d -namenode"
   datanode01:
-    image: hadoop-base
+    build: ./hadoop-base
     container_name: datanode01
     networks: 
       - hadoopnet
     hostname: datanode01
     command: "/etc/bootstrap.sh -d -datanode"
   datanode02:
-    image: hadoop-base
+    build: ./hadoop-base
     container_name: datanode02
     networks: 
       - hadoopnet
