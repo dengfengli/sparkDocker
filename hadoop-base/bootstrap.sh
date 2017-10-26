@@ -28,6 +28,7 @@ fi
 
 if [[ `echo $1 | grep "datanode"` || `echo $2 | grep "datanode"` ]]; then
   # $HADOOP_PREFIX/sbin/start-dfs.sh
+  echo "Prepare datanode"
   $HADOOP_PREFIX/sbin/hadoop-daemons.sh --script hdfs start datanode
   $HADOOP_PREFIX/sbin/yarn-daemons.sh start nodemanager
 fi

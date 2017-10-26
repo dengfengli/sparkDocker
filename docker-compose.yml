@@ -30,6 +30,13 @@ services:
       - hadoopnet
     hostname: datanode02
     command: "/etc/bootstrap.sh -d -datanode"
+  # submitnode:
+  #   build: ./hadoop-base
+  #   container_name: submitnode
+  #   networks: 
+  #     - hadoopnet
+  #   hostname: submitnode
+  #   command: "/etc/bootstrap.sh -d"
 
 networks:
   hadoopnet:
