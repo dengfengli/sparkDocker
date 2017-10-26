@@ -1,0 +1,1 @@
+sh submit.sh --class org.apache.spark.examples.LogQuery --master yarn --deploy-mode cluster --executor-memory 512m --num-executors 2 /Users/dengfeng.li/Documents/spark/examples/target/scala-2.11/jars/spark-examples_2.11-2.3.0-SNAPSHOT.jar
