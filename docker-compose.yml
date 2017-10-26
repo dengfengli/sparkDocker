@@ -37,6 +37,14 @@ services:
       - hadoopnet
     hostname: submitnode
     command: "/etc/bootstrap.sh -d"
+  airflow:
+    build: ./airflow
+    container_name: airflow
+    networks: 
+      - hadoopnet
+    ports:
+      - "8080:8080"
+    hostname: airflow
 
 networks:
   hadoopnet:
