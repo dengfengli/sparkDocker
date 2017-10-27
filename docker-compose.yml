@@ -37,15 +37,34 @@ services:
       - hadoopnet
     hostname: submitnode
     command: "/etc/bootstrap.sh -d"
-  airflow:
-    build: ./airflow
-    container_name: airflow
-    networks: 
-      - hadoopnet
-    ports:
-      - "8080:8080"
-    hostname: airflow
 
+  postgres:
+    image: postgres:9.6
+    hostname: postgres
+    networks: 
+          - hadoopnet
+    environment:
+      - POSTGRES_USER=airflow
+      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_DB=airflow
+
+  airflow:
+        build: ./airflow
+        container_name: airflow
+        restart: always
+        depends_on:
+            - postgres
+        environment:
+            - LOAD_EX=n
+            - EXECUTOR=Local
+        networks: 
+          - hadoopnet
+        hostname: airflow
+        volumes:
+            - ./airflow/dags:/usr/local/airflow/dags
+        ports:
+            - "8080:8080"
+        command: webserver
 networks:
   hadoopnet:
   # lb:

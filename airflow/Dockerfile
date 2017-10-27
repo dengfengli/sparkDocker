@@ -74,10 +74,30 @@ RUN set -ex \
         /usr/share/doc \
         /usr/share/doc-base
 
+# RUN apt-get update && apt-get install -y git
+# RUN git clone https://github.com/apache/incubator-airflow.git
+# RUN cd incubator-airflow
+# RUN pip install .
+
 COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_HOME}/airflow.cfg
 
 RUN chown -R airflow: ${AIRFLOW_HOME}
+
+RUN curl -s https://d3kbcqa49mib13.cloudfront.net/spark-2.2.0-bin-hadoop2.7.tgz | tar -xz -C /usr/local/
+RUN cd /usr/local && ln -s spark-2.2.0-bin-hadoop2.7 spark
+ENV SPARK_HOME /usr/local/spark
+ENV PATH="/usr/local/spark/bin/:${PATH}"
+
+RUN mkdir /usr/local/airflow/plugins
+ADD spark_operator_plugin.py /usr/local/airflow/plugins/spark_operator_plugin.py
+
+RUN mkdir -p /usr/java/default && \
+    curl -Ls 'http://download.oracle.com/otn-pub/java/jdk/8u151-b12/e758a0de34e24606bca991d704f6dcbf/jdk-8u151-linux-x64.tar.gz' -H 'Cookie: oraclelicense=accept-securebackup-cookie' | \
+    tar --strip-components=1 -xz -C /usr/java/default/
+
+ENV JAVA_HOME /usr/java/default/
+ENV PATH $PATH:$JAVA_HOME/bin
 
 EXPOSE 8080 5555 8793
 
