@@ -99,6 +99,8 @@ RUN mkdir -p /usr/java/default && \
 ENV JAVA_HOME /usr/java/default/
 ENV PATH $PATH:$JAVA_HOME/bin
 
+ADD ./spark-examples.jar /spark-examples.jar
+ENV HADOOP_USER_NAME root
 EXPOSE 8080 5555 8793
 
 USER airflow
