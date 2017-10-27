@@ -37,7 +37,6 @@ services:
   #     - hadoopnet
   #   hostname: submitnode
   #   command: "/etc/bootstrap.sh -d"
-
   postgres:
     image: postgres:9.6
     hostname: postgres
@@ -69,14 +68,3 @@ services:
         command: webserver
 networks:
   hadoopnet:
-  # lb:
-  #   image: dockercloud/haproxy
-  #   hostname: load-balancer
-  #   network: hadoopnet
-  #   container_name: load-balancer
-  #   links:
-  #     - "datanode01"
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #   ports:
-  #     - 8081:8081
